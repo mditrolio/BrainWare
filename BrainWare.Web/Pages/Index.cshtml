@@ -1,0 +1,28 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "BrainWare Orders";
+}
+
+<div>
+    <h1 class="display-4">Your Orders</h1>
+    @if (Model.Orders != null && Model.Orders.Any())
+    {
+        <ul>
+        @foreach (var order in Model.Orders)
+        {
+            <li>@order.Description (Total: $@order.OrderProducts?.Sum(x => x.Quantity * x.Price))
+                @if (order.OrderProducts != null && order.OrderProducts.Any())
+                {
+                    <ul>
+                        @foreach (var product in order.OrderProducts)
+                        {
+                            <li>@product.Product.Name (@product.Quantity @@ $@product.Price/ea)</li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+        </ul>
+    }
+</div>
